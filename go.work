@@ -1,0 +1,12 @@
+go 1.22
+
+use (
+	./payment-admin-api
+	./payment-callback-api
+	./payment-common
+	./payment-core-service
+	./payment-merchant-api
+	./payment-proto
+	./payment-worker
+)
+

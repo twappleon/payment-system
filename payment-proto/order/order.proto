@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "github.com/company/payment-proto/order";
+
+service OrderService {
+  rpc CreatePaymentOrder(CreatePaymentOrderRequest) returns (CreatePaymentOrderResponse);
+  rpc QueryPaymentOrder(QueryPaymentOrderRequest) returns (QueryPaymentOrderResponse);
+  rpc HandleChannelCallback(HandleChannelCallbackRequest) returns (HandleChannelCallbackResponse);
+  rpc ManualMarkSuccess(ManualMarkSuccessRequest) returns (ManualMarkSuccessResponse);
+}
+
+message CreatePaymentOrderRequest {
+  string merchant_no = 1;
+  string merchant_order_no = 2;
+  string amount = 3;
+  string currency = 4;
+  string notify_url = 5;
+  string client_ip = 6;
+}
+
+message CreatePaymentOrderResponse {
+  string platform_order_no = 1;
+  string status = 2;
+  string pay_url = 3;
+}
+
+message QueryPaymentOrderRequest {
+  string merchant_no = 1;
+  string merchant_order_no = 2;
+  string platform_order_no = 3;
+}
+
+message QueryPaymentOrderResponse {
+  string platform_order_no = 1;
+  string merchant_order_no = 2;
+  string amount = 3;
+  string currency = 4;
+  string status = 5;
+}
+
+message HandleChannelCallbackRequest {
+  string channel_code = 1;
+  string platform_order_no = 2;
+  string channel_order_no = 3;
+  string channel_status = 4;
+  string amount = 5;
+  string raw_body = 6;
+}
+
+message HandleChannelCallbackResponse {
+  bool accepted = 1;
+  string status = 2;
+}
+
+message ManualMarkSuccessRequest {
+  string platform_order_no = 1;
+  string operator_id = 2;
+  string reason = 3;
+}
+
+message ManualMarkSuccessResponse {
+  bool accepted = 1;
+  string status = 2;
+}
+

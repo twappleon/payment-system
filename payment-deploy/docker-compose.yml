@@ -1,0 +1,80 @@
+version: "3.9"
+
+services:
+  merchant-api:
+    build:
+      context: ../payment-merchant-api
+    env_file:
+      - ./env/merchant-api.env
+    ports:
+      - "8081:8080"
+    depends_on:
+      - core-service
+      - redis
+      - rabbitmq
+
+  admin-api:
+    build:
+      context: ../payment-admin-api
+    env_file:
+      - ./env/admin-api.env
+    ports:
+      - "8082:8080"
+    depends_on:
+      - core-service
+      - redis
+
+  callback-api:
+    build:
+      context: ../payment-callback-api
+    env_file:
+      - ./env/callback-api.env
+    ports:
+      - "8083:8080"
+    depends_on:
+      - redis
+      - rabbitmq
+
+  core-service:
+    build:
+      context: ../payment-core-service
+    env_file:
+      - ./env/core-service.env
+    ports:
+      - "9001:9001"
+    depends_on:
+      - mysql
+      - redis
+      - rabbitmq
+
+  worker:
+    build:
+      context: ../payment-worker
+    env_file:
+      - ./env/worker.env
+    depends_on:
+      - mysql
+      - redis
+      - rabbitmq
+      - core-service
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: payment
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../migrations:/docker-entrypoint-initdb.d:ro
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
