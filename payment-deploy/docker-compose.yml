@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   merchant-api:
     build:
@@ -64,17 +62,17 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: payment
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - ../migrations:/docker-entrypoint-initdb.d:ro
 
   redis:
     image: redis:7
     ports:
-      - "6379:6379"
+      - "6380:6379"
 
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5673:5672"
+      - "15673:15672"

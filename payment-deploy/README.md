@@ -20,10 +20,10 @@ merchant-api  8081
 admin-api     8082
 callback-api  8083
 core-service  9001
-mysql         3306
-redis         6379
-rabbitmq      5672
-rabbitmq-ui   15672
+mysql         3307
+redis         6380
+rabbitmq      5673
+rabbitmq-ui   15673
 ```
 
 ## Start
@@ -57,4 +57,3 @@ env/worker.env
 ```
 
 Production secrets should not be committed. Use a secret manager or platform-level environment variable management for real deployments.
-

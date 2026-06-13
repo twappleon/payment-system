@@ -13,10 +13,10 @@ merchant-api  8081
 admin-api     8082
 callback-api  8083
 core-service  9001
-mysql         3306
-redis         6379
-rabbitmq      5672
-rabbitmq-ui   15672
+mysql         3307
+redis         6380
+rabbitmq      5673
+rabbitmq-ui   15673
 ```
 
 ## Smoke Test
@@ -55,4 +55,3 @@ curl -X POST http://localhost:8083/callback/v1/channel/channel_a/payment \
     "sign": "placeholder"
   }'
 ```
-
